@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-0">Rooms</h2>
+        <p class="text-muted mb-0">Manage all rooms in the PG</p>
+    </div>
+    <a href="{{ url_for('add_room') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>Add Room
+    </a>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Room Number</th>
+            <th>Capacity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.id }}</td>
+            <td>{{ room.number }}</td>
+            <td>{{ room.capacity }}</td>
+            <td>
+                <a href="{{ url_for('edit_room', room_id=room.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ url_for('delete_room', room_id=room.id) }}" method="post" style="display:inline-block;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this room?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} 

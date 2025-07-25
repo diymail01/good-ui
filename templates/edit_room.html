@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Room</h2>
+<form method="post">
+    <div class="mb-3">
+        <label for="number" class="form-label">Room Number</label>
+        <input type="text" class="form-control" id="number" name="number" value="{{ room.number }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="capacity" class="form-label">Capacity</label>
+        <input type="number" class="form-control" id="capacity" name="capacity" value="{{ room.capacity }}" required min="1">
+    </div>
+    <button type="submit" class="btn btn-primary">Update Room</button>
+    <a href="{{ url_for('list_rooms') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %} 

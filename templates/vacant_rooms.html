@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Vacant Rooms</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Room Number</th>
+            <th>Capacity</th>
+            <th>Vacant Spots</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in vacant_rooms %}
+        <tr>
+            <td>{{ item.room.number }}</td>
+            <td>{{ item.room.capacity }}</td>
+            <td>{{ item.vacant }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} 

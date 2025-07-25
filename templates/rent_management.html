@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Rent Management ({{ current_month }})</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Room</th>
+            <th>Rent Status</th>
+            <th>Paid Date</th>
+            <th>Days Overdue</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in rent_data %}
+        <tr {% if not item.payment.paid %}class="table-danger"{% endif %}>
+            <td>{{ item.student.name }}</td>
+            <td>{{ item.student.room.number if item.student.room else 'N/A' }}</td>
+            <td>{% if item.payment.paid %}Paid{% else %}Unpaid{% endif %}</td>
+            <td>{{ item.payment.paid_date.strftime('%Y-%m-%d') if item.payment.paid_date else '' }}</td>
+            <td>{% if not item.payment.paid and item.days_overdue > 0 %}{{ item.days_overdue }}{% elif not item.payment.paid %}Due{% else %}-{% endif %}</td>
+            <td>
+                {% if not item.payment.paid %}
+                <form method="post" style="display:inline-block;">
+                    <input type="hidden" name="pay_id" value="{{ item.payment.id }}">
+                    <button type="submit" class="btn btn-success btn-sm">Mark as Paid</button>
+                </form>
+                {% else %}
+                <span class="text-success">Paid</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} 

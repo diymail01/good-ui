@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Add Student</h2>
+<form method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" required>
+    </div>
+    <div class="mb-3">
+        <label for="room_id" class="form-label">Room</label>
+        <select class="form-select" id="room_id" name="room_id" required>
+            <option value="">Select Room</option>
+            {% for room in rooms %}
+            <option value="{{ room.id }}">{{ room.number }} (Capacity: {{ room.capacity }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="rent_status" class="form-label">Rent Status</label>
+        <select class="form-select" id="rent_status" name="rent_status" required>
+            <option value="Paid">Paid</option>
+            <option value="Unpaid">Unpaid</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="mode_of_payment" class="form-label">Mode of Payment</label>
+        <input type="text" class="form-control" id="mode_of_payment" name="mode_of_payment" required>
+    </div>
+    <div class="mb-3">
+        <label for="monthly_rent" class="form-label">Monthly Rent</label>
+        <input type="number" class="form-control" id="monthly_rent" name="monthly_rent" required min="0">
+    </div>
+    <div class="mb-3">
+        <label for="security_deposit" class="form-label">Security Deposit</label>
+        <input type="number" class="form-control" id="security_deposit" name="security_deposit" required min="0">
+    </div>
+    <div class="mb-3">
+        <label for="join_date" class="form-label">Join Date</label>
+        <input type="date" class="form-control" id="join_date" name="join_date" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Student</button>
+    <a href="{{ url_for('list_students') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %} 
