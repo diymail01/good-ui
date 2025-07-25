@@ -11,7 +11,8 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" id="main-stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dark-mode.css') }}" id="dark-mode-stylesheet" disabled>
 </head>
 <body>
     <!-- Navigation -->
@@ -50,6 +51,14 @@
                         <a class="nav-link" href="/rent">
                             <i class="bi bi-cash-coin me-1"></i> Rent
                         </a>
+                    </li>
+                    <li class="nav-item ms-2 d-flex align-items-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="darkModeToggle" aria-label="Toggle dark mode">
+                            <label class="form-check-label" for="darkModeToggle" title="Toggle Dark Mode">
+                                <i class="bi bi-moon-stars"></i>
+                            </label>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -91,18 +100,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script>
-        // Enable tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        });
-        
-        // Auto-hide alerts after 5 seconds
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove(); 
+        // Dark mode functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
+            
+            // Check for saved user preference, if any
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            
+            // Apply the saved preference
+            if (darkMode) {
+                darkModeStylesheet.disabled = false;
+                darkModeToggle.checked = true;
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            }
+            
+            // Toggle dark mode
+            darkModeToggle.addEventListener('change', function() {
+                const isDarkMode = this.checked;
+                darkModeStylesheet.disabled = !isDarkMode;
+                document.documentElement.setAttribute('data-bs-theme', isDarkMode ? 'dark' : 'light');
+                localStorage.setItem('darkMode', isDarkMode);
             });
-        }, 5000);
+            
+            // Enable tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+            
+            // Auto-hide alerts after 5 seconds
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 5000);
+        });
     </script>
 </body>
 </html>
