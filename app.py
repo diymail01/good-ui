@@ -452,4 +452,4 @@ def create_admin_user():
 
 if __name__ == '__main__':
     create_admin_user()
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
