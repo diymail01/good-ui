@@ -333,7 +333,11 @@ def rent_management():
         return redirect(url_for('rent_management'))
     return render_template('rent_management.html', rent_data=rent_data, current_month=current_month)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True) 
+    app.run(debug=True)
