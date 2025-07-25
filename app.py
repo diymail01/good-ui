@@ -14,17 +14,15 @@ from reportlab.lib.units import inch
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pg_management.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'supersecretkey'  # In production, use a strong secret key from environment variables
+app.secret_key = 'supersecretkey'
 db = SQLAlchemy(app)
 
-# Room model
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.String(10), unique=True, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     students = db.relationship('Student', backref='room', lazy=True)
 
-# Student model
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
